@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Shopin</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+
+		<!-- jQuery library -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+		<!-- Popper JS -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+		<!-- Latest compiled JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+	</head>
+	<body style="background-color: #ccc; ">
+		{% include "includes/nav.html" %}
+		{% with messages=get_flashed_messages(with_categories=True) %}
+			{% if messages %}
+				{% for category,message in messages %}
+					<div class="alert alert-{{category}}" style="margin:0 !important">
+						<button type="button" class="close" data-dismiss="alert">&times;</button>
+						<p>{{message}}</p>
+					</div>
+				{% endfor %}
+			{% endif %}
+		{% endwith %}
+		<div class="container-fluid">
+			<div class="row mt-3">
+				{% for item in items %}
+				<div class="col-lg-3 col-md-4 col-sm-6 col-6 mb-3">
+					<div class="card">
+						<img src="{{item['item_img_address']}}" style="max-width: 200px; max-height: 200px;" class="mx-auto mt-1">
+						<div class="card-body text-center">
+							<h6 class="card-title">{{item['item_name']}}</h6>
+							<p class="card-text">&#8377 {{item['price']}}</p>
+							<a href="/addcart/{{item.item_id}}" class="btn btn-primary">ADD TO CART</a>
+						</div>
+					</div>
+				</div>
+				{% endfor %}
+
+			</div>
+		</div>
+	</body>
+</html>

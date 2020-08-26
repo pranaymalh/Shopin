@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Shopin-Cart</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+
+		<!-- jQuery library -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+		<!-- Popper JS -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+		<!-- Latest compiled JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+	</head>
+	<body style="background-color: #aaa">
+		{% include "includes/nav.html" %}
+		{% with messages=get_flashed_messages(with_categories=True) %}
+			{% if messages %}
+				{% for category,message in messages %}
+					<div class="alert alert-{{category}}" style="margin:0 !important">
+						<button type="button" class="close" data-dismiss="alert">&times;</button>
+						<p>{{message}}</p>
+					</div>
+				{% endfor %}
+			{% endif %}
+		{% endwith %}
+		<div class="container-fluid">
+			{% for order in all_orders %}
+			<div class="jumbotron mt-3" style="padding: 0 !important;">
+				<h3 style="font-size: 3vw;">Order ID : #{{order['order_id']}}</h3>
+				<div class="container-fluid" style="background-color: white !important; border-radius: 4px !important;">
+				<ol class="list-unstyled" style="padding:10px 0px !important;">
+					{% for data in order['order_items'] %}
+						<li><p style="text-align: left;">{{data.r2['item_name']}}  &nbsp X {{data.r1['count']}}<span style="float: right;">&#8377 {{data.r2['price']*data.r1['count']}}</span></p>
+						</li>
+					{% endfor %}
+					<li><p style="text-align:left;"><strong>Total</strong><span style="float: right;"><strong>&#8377 {{order['order_total']}}</strong></span></p></li>
+					<li><p style="text-align:left;">Shipping Address<span style="float: right;">{{order['ship_add']}}</span></p></li>
+				</ol>
+				</div>
+			</div>
+			{% endfor %}
+		</div>
+	</body>
+</html>

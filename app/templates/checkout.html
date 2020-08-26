@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Shopin- Checkout</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+
+	<!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+	<!-- Popper JS -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+	<!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+	{% include "includes/nav.html" %}
+	{% with messages=get_flashed_messages(with_categories=True) %}
+		{% if messages %}
+			{% for category,message in messages %}
+				<div class="alert alert-{{category}}" style="margin:0 !important">
+					<button type="button" class="close" data-dismiss="alert">&times;</button>
+					<p>{{message}}</p>
+				</div>
+			{% endfor %}
+		{% endif %}
+	{% endwith %}
+	<div class="container-fluid" style="margin: 0; padding: 0;">
+		<div class="jumbotron text-center">
+			<h1>Place your order</h1>
+		</div>
+	</div>
+	<div class="container">
+		<div class="jumbotron">
+			<ol class="list-unstyled">
+				{% for data in classes %}
+					<li><p style="text-align: left;">{{data.r2['item_name']}}  &nbsp X {{data.r1['count']}}<span style="float: right;">&#8377 {{data.r2['price']*data.r1['count']}}</span></p>
+					</li>
+				{% endfor %}
+			<li><p style="text-align:left;"><strong>Total</strong><span style="float: right;"><strong>&#8377 {{summed}}</strong></span></p></li>
+			</ol>
+			<form name="place_order" action="" method="post">
+				<fieldset class="form-group" style="margin: 0 !important;">
+					{{form.hidden_tag()}}
+					<p >{{form.ship_add.label}}
+						<span style="float: right;">
+						{{form.ship_add()}}</span>
+					</p>
+					<p class="text-center">{{form.submit}}</p>
+				</fieldset>
+			</form>
+		</div>
+	</div>
+	
+</body>
+</html>
